@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>IPUZ Visual PDF Editor</title>
+  <link href="styles.css" rel="stylesheet">
+  <link href="editor-styles.css" rel="stylesheet">
+  <script src="editor.js" defer></script>
+</head>
+<body class="editor-page">
+  <div class="editor-container">
+    <div class="editor-sidebar">
+      <h2>Visual Editor</h2>
+      
+      <div class="editor-section">
+        <h3>Puzzle</h3>
+        <div class="file-input">
+          <button id="importPuzzleBtn">Import IPUZ File</button>
+          <span id="editorSelectedFile">No file selected</span>
+        </div>
+      </div>
+      
+      <div class="editor-section">
+        <h3>Page Settings</h3>
+        <div class="setting">
+          <label for="editorPaperSize">Paper Size:</label>
+          <select id="editorPaperSize">
+            <option value="letter" selected>Letter (8.5 × 11 in)</option>
+            <option value="a4">A4 (210 × 297 mm)</option>
+            <option value="legal">Legal (8.5 × 14 in)</option>
+          </select>
+        </div>
+        <div class="page-nav">
+          <button id="prevPage" disabled>&lt; Prev</button>
+          <span id="pageInfo">Page 1 of 1</span>
+          <button id="nextPage" disabled>Next &gt;</button>
+          <button id="addPage">Add Page</button>
+        </div>
+      </div>
+      
+      <div class="editor-section">
+        <h3>Editor Tools</h3>
+      <div class="editor-tools">
+        <button id="toggleGridSnap" class="active">Disable Grid Snap</button>
+        <button id="addCustomTextBtn">Add Text</button>
+        <button id="cloneElementBtn">Clone Selected</button>
+        <button id="deleteElementBtn">Delete Selected</button>
+      </div>
+      </div>
+      
+      <div class="editor-section">
+        <h3>Element Properties</h3>
+        <div id="elementProperties">
+          <p>Select an element to edit its properties</p>
+        </div>
+      </div>
+      
+      <div class="editor-actions">
+        <button id="generatePdfBtn" class="primary-btn">Generate PDF</button>
+        <button id="returnToSettings">Return to Settings</button>
+      </div>
+    </div>
+    
+    <div class="editor-main">
+      <div class="editor-tools-top">
+        <div class="zoom-controls">
+          <button id="zoomOut">-</button>
+          <span id="zoomLevel">100%</span>
+          <button id="zoomIn">+</button>
+        </div>
+      </div>
+      
+      <div class="editor-canvas-container">
+        <canvas id="editorCanvas"></canvas>
+      </div>
+      
+      <div class="editor-status-bar">
+        <div id="editorStatus" class="editor-status">Ready</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

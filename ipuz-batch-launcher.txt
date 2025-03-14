@@ -1,0 +1,36 @@
+@echo off
+echo IPUZ Batch Converter
+echo -------------------
+
+:: Check if input/output directories were provided
+if "%~1"=="" (
+  echo Error: Missing input directory
+  goto :usage
+)
+
+if "%~2"=="" (
+  echo Error: Missing output directory
+  goto :usage
+)
+
+:: Process the files
+echo Converting all IPUZ files from %~1 to PDFs in %~2
+node batch-convert.js %*
+goto :end
+
+:usage
+echo Usage: batch-convert.bat ^<input-directory^> ^<output-directory^> [options]
+echo.
+echo Options:
+echo   --fontSize ^<number^>            Font size for clues (default: 18)
+echo   --fontFamily ^<times^|helvetica^|courier^>  Font family (default: times)
+echo   --layoutStyle ^<style^>          Layout style (default: book-style)
+echo   --clueColumns ^<number^|auto^>    Number of columns for clues (default: 1)
+echo   --includeCopyright             Include copyright information
+echo   --includeSolution              Include solution grid
+echo.
+echo Example:
+echo   batch-convert.bat puzzles output --fontSize 20 --clueColumns 2 --includeSolution
+
+:end
+pause

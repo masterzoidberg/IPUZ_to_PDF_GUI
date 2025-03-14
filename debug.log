@@ -1,0 +1,26 @@
+Application Log 
+
+> ipuz-to-pdf-gui@1.0.0 start
+> electron .
+
+
+Normalizing IPUZ data...
+Normalized data: Found 15x15 grid
+Found 31 Across clues and 39 Down clues
+Normalizing IPUZ data...
+Normalized data: Found 15x15 grid
+Found 35 Across clues and 35 Down clues
+Normalizing IPUZ data...
+Normalized data: Found 15x15 grid
+Found 31 Across clues and 39 Down clues
+PDF generation error: Error: EBUSY: resource busy or locked, open 'D:\Crossword Books\Book One\PDFs\A Bit of Everything.pdf'
+    at Object.openSync (node:fs:603:3)
+    at Object.func [as openSync] (node:electron/js2c/node_init:2:2214)
+    at Object.writeFileSync (node:fs:2324:35)
+    at C:\Apps\ipuz-to-pdf-gui\main.js:660:8
+    at async WebContents.<anonymous> (node:electron/js2c/browser_init:2:77963) {
+  errno: -4082,
+  syscall: 'open',
+  code: 'EBUSY',
+  path: 'D:\\Crossword Books\\Book One\\PDFs\\A Bit of Everything.pdf'
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>IPUZ to PDF Converter</title>
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1>IPUZ to Large Print PDF Converter</h1>
+    
+    <div class="section file-section">
+      <h2>Input File</h2>
+      <div class="file-input">
+        <button id="selectFileBtn">Select IPUZ File</button>
+        <span id="selectedFile">No file selected</span>
+      </div>
+      
+      <div class="batch-section">
+        <h3>Batch Processing</h3>
+        <div class="setting">
+          <label for="batchMode">Enable Batch Mode:</label>
+          <input type="checkbox" id="batchMode">
+        </div>
+        <div class="setting batch-controls" style="display: none;">
+          <button id="selectInputFolderBtn">Select Input Folder</button>
+          <span id="selectedInputFolder">No folder selected</span>
+        </div>
+        <div class="setting batch-controls" style="display: none;">
+          <button id="selectOutputFolderBtn">Select Output Folder</button>
+          <span id="selectedOutputFolder">No folder selected</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section settings-section">
+      <h2>Output Settings</h2>
+      
+      <div class="setting-group">
+        <h3>Font Settings</h3>
+        <div class="setting">
+          <label for="fontFamily">Font Family:</label>
+          <select id="fontFamily">
+            <option value="times" selected>Times Roman</option>
+            <option value="helvetica">Helvetica</option>
+            <option value="courier">Courier</option>
+          </select>
+        </div>
+        
+        <div class="setting">
+          <label for="fontSize">Clue Font Size:</label>
+          <input type="number" id="fontSize" min="12" max="36" value="18">
+        </div>
+        
+        <div class="setting">
+          <label for="titleFontSize">Title Font Size:</label>
+          <input type="number" id="titleFontSize" min="14" max="48" value="24">
+        </div>
+        
+        <div class="setting">
+          <label for="sectionHeadingSize">Section Heading Size:</label>
+          <input type="number" id="sectionHeadingSize" min="14" max="36" value="20">
+        </div>
+        
+        <div class="setting">
+          <label for="lineSpacing">Line Spacing:</label>
+          <select id="lineSpacing">
+            <option value="1.0">Normal</option>
+            <option value="1.5" selected>Large (1.5×)</option>
+            <option value="2.0">Extra Large (2×)</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="setting-group">
+        <h3>Layout Settings</h3>
+        <div class="setting">
+          <label for="marginSize">Margin Size:</label>
+          <select id="marginSize">
+            <option value="small">Small</option>
+            <option value="medium" selected>Medium</option>
+            <option value="large">Large</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+        
+        <div class="setting margin-custom" style="display: none;">
+          <label for="customMargin">Custom Margin (points):</label>
+          <input type="number" id="customMargin" min="10" max="100" value="36">
+        </div>
+        
+        <div class="setting">
+          <label for="layoutStyle">Layout Style:</label>
+          <select id="layoutStyle">
+            <option value="book-style" selected>Book Style (Grid, Across, Down)</option>
+            <option value="grid-first">Grid First, Then All Clues</option>
+            <option value="clues-first">Clues First, Then Grid</option>
+            <option value="grid-only">Grid Only (No Clues)</option>
+            <option value="clues-only">Clues Only (No Grid)</option>
+          </select>
+        </div>
+        
+        <div class="setting">
+          <label for="clueColumns">Clue Columns:</label>
+          <select id="clueColumns">
+            <option value="auto" selected>Auto (Optimal for Font Size)</option>
+            <option value="1">1 Column (Large Print)</option>
+            <option value="2">2 Columns</option>
+            <option value="3">3 Columns</option>
+            <option value="4">4 Columns (Compact)</option>
+          </select>
+        </div>
+        
+        <div class="setting">
+          <label for="titleClueSpacing">Title-Clue Spacing:</label>
+          <select id="titleClueSpacing">
+            <option value="normal">Normal</option>
+            <option value="large" selected>Large</option>
+            <option value="extra-large">Extra Large</option>
+          </select>
+        </div>
+        
+        <div class="setting">
+          <label for="paperSize">Paper Size:</label>
+          <select id="paperSize">
+            <option value="letter" selected>Letter (8.5 × 11 in)</option>
+            <option value="a4">A4 (210 × 297 mm)</option>
+            <option value="legal">Legal (8.5 × 14 in)</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="setting-group">
+        <h3>Content Options</h3>
+        <div class="setting">
+          <label for="includeCopyright">Include Copyright:</label>
+          <input type="checkbox" id="includeCopyright">
+        </div>
+        
+        <div class="setting">
+          <label for="includeSolution">Include Solution Grid:</label>
+          <input type="checkbox" id="includeSolution">
+        </div>
+      </div>
+    </div>
+    
+    <div class="section puzzle-info" id="puzzleInfo">
+      <h2>Puzzle Information</h2>
+      <div id="puzzleDetails">
+        Select a puzzle file to see details
+      </div>
+    </div>
+    
+    <div class="actions">
+      <button id="convertBtn" disabled>Convert to PDF</button>
+      <button id="openEditorBtn" class="secondary-btn">Visual Editor</button>
+    </div>
+    
+    <div class="status" id="statusMessage"></div>
+  </div>
+  
+  <script src="renderer.js"></script>
+</body>
+</html>
