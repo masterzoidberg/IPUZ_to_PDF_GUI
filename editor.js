@@ -966,16 +966,64 @@ function createPuzzleGrid(ipuzData, cellSize) {
     
     console.log("Creating puzzle grid with size:", gridSize);
     
+    // Sample the first few cells to detect format
+    const sampleCells = [];
+    for (let r = 0; r < Math.min(3, gridSize); r++) {
+        for (let c = 0; c < Math.min(3, gridSize[0]?.length || 0); c++) {
+            if (ipuzData.puzzle[r] && ipuzData.puzzle[r][c] !== undefined) {
+                sampleCells.push(ipuzData.puzzle[r][c]);
+            }
+        }
+    }
+    console.log("Sample cells for format detection:", sampleCells);
+    
+    // Determine if we need to invert the black/white detection
+    // This depends on the specific IPUZ format
+    let invertBlackWhite = false;
+    
+    // Check if this puzzle appears to be using reverse convention 
+    // (most cells are marked as 'black' when they should be white)
+    let blackCount = 0;
+    let totalCount = 0;
+    
+    for (let r = 0; r < gridSize; r++) {
+        for (let c = 0; c < (ipuzData.puzzle[r]?.length || 0); c++) {
+            const cell = ipuzData.puzzle[r][c];
+            totalCount++;
+            
+            // Apply regular black cell detection
+            if (cell === '#' || cell === 0 || cell === null) {
+                blackCount++;
+            } else if (typeof cell === 'object') {
+                if (cell.cell === 0 || cell.value === '#') {
+                    blackCount++;
+                } else if (!cell.hasOwnProperty('cell') && !cell.hasOwnProperty('value')) {
+                    blackCount++;
+                }
+            }
+        }
+    }
+    
+    // If more than 50% of cells detect as black, we probably need to invert
+    if (blackCount > totalCount * 0.5) {
+        invertBlackWhite = true;
+        console.log("Detected reverse color scheme - inverting black/white detection");
+    }
+    
+    console.log(`Grid analysis: ${blackCount} black cells out of ${totalCount} total cells, invertBlackWhite=${invertBlackWhite}`);
+    
     // Create cells
     for (let row = 0; row < gridSize; row++) {
-        for (let col = 0; col < gridSize; col++) {
+        for (let col = 0; col < (ipuzData.puzzle[row]?.length || 0); col++) {
             const cell = ipuzData.puzzle[row][col];
             
             // Check if it's a black cell - handle different IPUZ formats
             let isBlackCell = false;
             
             // Debug the cell data
-            console.log(`Cell at [${row},${col}]:`, cell);
+            if (row < 3 && col < 3) {
+                console.log(`Cell at [${row},${col}]:`, cell);
+            }
             
             if (cell === '#' || cell === 0 || cell === null) {
                 isBlackCell = true;
@@ -990,8 +1038,10 @@ function createPuzzleGrid(ipuzData, cellSize) {
                 }
             }
             
-            // If we're getting inverted coloring, flip the black/white determination
-            isBlackCell = !isBlackCell;
+            // Apply inversion if needed
+            if (invertBlackWhite) {
+                isBlackCell = !isBlackCell;
+            }
             
             // Create cell rectangle
             const cellRect = new fabric.Rect({
@@ -1016,6 +1066,9 @@ function createPuzzleGrid(ipuzData, cellSize) {
                     } else if (cell.number > 0) {
                         cellNumber = cell.number;
                     }
+                } else if (typeof cell === 'number' && cell > 0) {
+                    // Some formats use just a number for the cell
+                    cellNumber = cell;
                 }
                 
                 if (cellNumber && cellNumber > 0) {
